@@ -5,19 +5,33 @@ import (
 	"net/http"
 )
 
+func enableCORS(w *http.ResponseWriter) {
+	(*w).Header().Set("Access-Control-Allow-Origin", "*")
+	(*w).Header().Set("Access-Control-Allow-Methods", "GET, POST, OPTIONS")
+	(*w).Header().Set("Access-Control-Allow-Headers", "Content-Type")
+}
+
 func main() {
 
-	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
-		fmt.Fprint(w, "🚀 SafeDeploy Backend Running")
-	})
-
 	http.HandleFunc("/health", func(w http.ResponseWriter, r *http.Request) {
+		enableCORS(&w)
+
+		if r.Method == "OPTIONS" {
+			return
+		}
+
 		w.WriteHeader(http.StatusOK)
 		fmt.Fprint(w, "OK")
 	})
 
-	http.HandleFunc("/api/message", func(w http.ResponseWriter, r *http.Request) {
-		fmt.Fprint(w, `{"message":"Hello from Golang Backend 🚀"}`)
+	http.HandleFunc("/api/messages", func(w http.ResponseWriter, r *http.Request) {
+		enableCORS(&w)
+
+		if r.Method == "OPTIONS" {
+			return
+		}
+
+		fmt.Fprint(w, "🚀 SafeDeploy Backend Running")
 	})
 
 	fmt.Println("Server running on port 3000")
