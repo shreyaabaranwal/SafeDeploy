@@ -1,0 +1,12 @@
+FROM golang:1.22-alpine
+
+WORKDIR /app
+
+COPY services/backend-go/ .
+
+RUN go mod tidy
+RUN go build -o main ./cmd
+
+EXPOSE 3000
+
+CMD ["./main"]

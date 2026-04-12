@@ -3,8 +3,8 @@ body {
   text-align: center;
   margin-top: 80px;
 
-  background: linear-gradient(135deg, #1e3c72, #2a5298);
-  color: white;
+  background: linear-gradient(135deg, hsl(219, 58%, 28%), #ec9509);
+  color: rgb(247, 240, 240);
 }
 
 h1 {
@@ -23,12 +23,12 @@ button {
   border-radius: 8px;
   cursor: pointer;
 
-  background-color: #ff9800;
-  color: white;
+  background-color: hsl(219, 58%, 28%);
+  color: rgb(247, 242, 242);
 }
 
 button:hover {
-  background-color: #e68900;
+  background-color: #efbd07;
 }
 
 #output {
