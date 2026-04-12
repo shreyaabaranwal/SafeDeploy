@@ -29,8 +29,26 @@ Developer → CloudShell → CodeCommit → CodePipeline → CodeBuild → ECR �
 ```
 
 ---
-<img width="977" height="650" alt="image" src="https://github.com/user-attachments/assets/c237c3f2-2a57-4d8c-b4ec-ca904a23b90c" />
+<img width="996" height="662" alt="image" src="https://github.com/user-attachments/assets/4ead55a3-9c2f-4ba9-985e-398d08623586" />
 
+
+## End-to-End Workflow
+1. Developer pushes code (CloudShell → CodeCommit)
+2. CodePipeline triggers automatically
+3. CodeBuild:
+   → Builds Docker image
+   → Runs tests
+   → Pushes image to ECR
+4. ECS:
+   → Pulls new image
+   → Starts new task
+5. ALB:
+   → Sends /health request
+   → Validates container
+6. If healthy:
+   → Traffic routed to container
+7. If unhealthy:
+   → Task terminated (auto failure handling)
 ## ⚙️ Tech Stack & Services Used
 
 ### 💻 Development & Access
