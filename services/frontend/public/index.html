@@ -1,21 +1,41 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <title>SafeDeploy</title>
- <link rel="stylesheet" href="style.css">
-
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>SafeDeploy Dashboard</title>
+  <link rel="stylesheet" href="style.css" />
 </head>
+
 <body>
+  <div class="container">
 
-  <h1>🚀 AWS Cloud Club KIET </h1>
-  <h2>Bootcamp on CICD Workflow</h2>
-  <h3>SafeDeploy by Shreya Baranwal</h3>
-  <button onclick="checkHealth()">Check Health</button>
-  <button onclick="getMessage()">Get Message</button>
+    <header>
+      <h1>🚀 SafeDeploy</h1>
+      <p>AWS Cloud Club KIET | CI/CD Monitoring Dashboard</p>
+    </header>
 
-  <p id="output"></p>
+    <section class="card">
+      <h2>Service Health</h2>
+      <button onclick="checkHealth()">Check Health</button>
+      <p id="healthOutput" class="output"></p>
+    </section>
 
- 
-<script src="app.js"></script>
+    <section class="card">
+      <h2>Message API</h2>
+      <button onclick="getMessage()">Get Message</button>
+      <p id="messageOutput" class="output"></p>
+    </section>
+
+    <section class="card">
+      <h2>Custom API Call</h2>
+      <input type="text" id="endpoint" placeholder="/todos or /users" />
+      <button onclick="callCustomAPI()">Call API</button>
+      <pre id="customOutput"></pre>
+    </section>
+
+  </div>
+
+  <script src="app.js"></script>
 </body>
 </html>
