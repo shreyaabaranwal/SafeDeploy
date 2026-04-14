@@ -4,36 +4,44 @@ env:
   variables:
     AWS_DEFAULT_REGION: us-east-1
     ACCOUNT_ID: 606639293354
+    BACKEND_REPO: safedeploy-backend
+    FRONTEND_REPO: safedeploy
 
 phases:
+
   pre_build:
     commands:
-      - echo Logging into ECR
+      - echo Logging into ECR...
       - aws ecr get-login-password --region $AWS_DEFAULT_REGION | docker login --username AWS --password-stdin $ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com
 
   build:
     commands:
-      - echo Build backend
-      - docker build -t safedeploy-backend ./services/backend-go
-      - docker tag safedeploy-backend:latest $ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/safedeploy-backend:latest
+      # 🔹 BACKEND BUILD
+      - echo Building Backend...
+      - docker build -t $BACKEND_REPO -f deployments/docker/backend.Dockerfile .
 
-      - echo Build frontend
-      - docker build -t safedeploy-frontend -f deployments/docker/frontend.Dockerfile .
-      - docker tag safedeploy-frontend:latest $ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/safedeploy:latest
+      # 🔹 FRONTEND BUILD
+      - echo Building Frontend...
+      - docker build -t $FRONTEND_REPO -f deployments/docker/frontend.Dockerfile .
 
   post_build:
     commands:
-      - echo Push backend
-      - docker push $ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/safedeploy-backend:latest
+      - echo Tagging Images...
 
-      - echo Push frontend
-      - docker push $ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/safedeploy:latest
+      # 🔹 BACKEND TAG
+      - docker tag $BACKEND_REPO:latest $ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/$BACKEND_REPO:latest
 
-      - printf '[{"name":"safedeploy-container-backend","imageUri":"%s"},{"name":"safedeploy-container-frontend","imageUri":"%s"}]' \
-        $ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/safedeploy-backend:latest \
-        $ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/safedeploy:latest \
-        > imagedefinitions.json
+      # 🔹 FRONTEND TAG
+      - docker tag $FRONTEND_REPO:latest $ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/$FRONTEND_REPO:latest
+
+      - echo Pushing Images to ECR...
+
+      # 🔹 PUSH BACKEND
+      - docker push $ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/$BACKEND_REPO:latest
+
+      # 🔹 PUSH FRONTEND
+      - docker push $ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/$FRONTEND_REPO:latest
 
 artifacts:
   files:
-    - imagedefinitions.json
+    - '**/*'
