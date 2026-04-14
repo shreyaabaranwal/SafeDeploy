@@ -1,6 +1,6 @@
-# 🚀 Cloud-Native CI/CD Platform with Safe Deployment & Auto Failure Detection
+#  Cloud-Native CI/CD Platform with Safe Deployment & Auto Failure Detection
 
-## 📌 Overview
+##  Overview
 
 This project demonstrates a **production-grade, cloud-native CI/CD system** built entirely on AWS. It automates the full lifecycle from **code commit → build → test → deploy → validate → serve**, ensuring that only **healthy and verified deployments** are exposed to users.
 
@@ -8,7 +8,7 @@ The system incorporates **infrastructure-level validation, container orchestrati
 
 ---
 
-## 🎯 Objectives
+## Objectives
 
 * Build a **fully automated CI/CD pipeline**
 * Ensure **zero-downtime deployments**
@@ -18,7 +18,7 @@ The system incorporates **infrastructure-level validation, container orchestrati
 
 ---
 
-## 🏗️ System Architecture
+##  System Architecture
 
 ```id="wz9w3o"
 Developer → CloudShell → CodeCommit → CodePipeline → CodeBuild → ECR → ECS (Fargate) → ALB → Users
@@ -49,9 +49,9 @@ Developer → CloudShell → CodeCommit → CodePipeline → CodeBuild → ECR �
    → Traffic routed to container
 7. If unhealthy:
    → Task terminated (auto failure handling)
-## ⚙️ Tech Stack & Services Used
+##  Tech Stack & Services Used
 
-### 💻 Development & Access
+###  Development & Access
 
 * **CloudShell**
 
@@ -60,7 +60,7 @@ Developer → CloudShell → CodeCommit → CodePipeline → CodeBuild → ECR �
 
 ---
 
-### 🔐 Identity & Security
+###  Identity & Security
 
 * **IAM (Identity and Access Management)**
 
@@ -73,7 +73,7 @@ Developer → CloudShell → CodeCommit → CodePipeline → CodeBuild → ECR �
 
 ---
 
-### 🗂️ Source Control
+###  Source Control
 
 * **AWS CodeCommit**
 
@@ -82,7 +82,7 @@ Developer → CloudShell → CodeCommit → CodePipeline → CodeBuild → ECR �
 
 ---
 
-### 🔁 CI/CD Orchestration
+### CI/CD Orchestration
 
 * **AWS CodePipeline**
 
@@ -93,7 +93,7 @@ Developer → CloudShell → CodeCommit → CodePipeline → CodeBuild → ECR �
 
 ---
 
-### 🏗️ Build System
+### Build System
 
 * **AWS CodeBuild**
 
@@ -107,7 +107,7 @@ Developer → CloudShell → CodeCommit → CodePipeline → CodeBuild → ECR �
 
 ---
 
-### 📦 Container Registry
+###  Container Registry
 
 * **Amazon ECR (Elastic Container Registry)**
 
@@ -116,7 +116,7 @@ Developer → CloudShell → CodeCommit → CodePipeline → CodeBuild → ECR �
 
 ---
 
-### 🚢 Compute Layer
+### Compute Layer
 
 * **Amazon ECS (Fargate)**
 
@@ -130,7 +130,7 @@ Developer → CloudShell → CodeCommit → CodePipeline → CodeBuild → ECR �
 
 ---
 
-### 🌐 Networking & Traffic Routing
+###  Networking & Traffic Routing
 
 * **Application Load Balancer (ALB)**
 
@@ -146,7 +146,7 @@ Developer → CloudShell → CodeCommit → CodePipeline → CodeBuild → ECR �
 
 ---
 
-### 🖥️ Infrastructure (Underlying)
+###  Infrastructure (Underlying)
 
 * **Amazon EC2 (Implicit via ALB & Networking)**
 
@@ -155,7 +155,7 @@ Developer → CloudShell → CodeCommit → CodePipeline → CodeBuild → ECR �
 
 ---
 
-### 📊 Monitoring & Observability
+### Monitoring & Observability
 
 * **Amazon CloudWatch**
 
@@ -171,7 +171,7 @@ Developer → CloudShell → CodeCommit → CodePipeline → CodeBuild → ECR �
 
 ---
 
-## 🔄 End-to-End Workflow
+##  End-to-End Workflow
 
 ```id="k7d4bm"
 1. Developer pushes code (CloudShell → CodeCommit)
@@ -194,7 +194,7 @@ Developer → CloudShell → CodeCommit → CodePipeline → CodeBuild → ECR �
 
 ---
 
-## 🧪 Health Check Mechanism
+## Health Check Mechanism
 
 ```id="v2n3x7"
 GET /health → 200 OK
@@ -206,7 +206,7 @@ GET /health → 200 OK
 
 ---
 
-## ⚠️ Real-World Challenges & Debugging
+## Real-World Challenges & Debugging
 
 ### Issue Encountered:
 
@@ -225,29 +225,29 @@ GET /health → 200 OK
 
 ---
 
-## 🛠️ Fixes Implemented
+## Fixes Implemented
 
-* ✅ Added `/health` endpoint
-* ✅ Fixed server binding (`0.0.0.0:3000`)
-* ✅ Removed duplicate server start
-* ✅ Increased health check grace period
-* ✅ Corrected ECS ↔ ALB target mapping
-* ✅ Simplified startup (removed blocking DB init)
+*  Added `/health` endpoint
+*  Fixed server binding (`0.0.0.0:3000`)
+*  Removed duplicate server start
+*  Increased health check grace period
+*  Corrected ECS ↔ ALB target mapping
+*  Simplified startup (removed blocking DB init)
 
 ---
 
-## 📊 Final Outcome
+##  Final Outcome
 
 | Metric        | Before      | After              |
 | ------------- | ----------- | ------------------ |
-| Deployment    | Failed ❌    | Successful ✅       |
-| Target Health | 0 ❌         | 1 Healthy ✅        |
-| Availability  | 503 Error ❌ | Working Endpoint ✅ |
-| Stability     | Unstable ❌  | Stable ✅           |
+| Deployment    | Failed      | Successful         |
+| Target Health | 0           | 1 Healthy          |
+| Availability  | 503 Error   | Working Endpoint   |
+| Stability     | Unstable    | Stable             |
 
 ---
 
-## 🌐 Live Endpoint
+## Live Endpoint
 
 ```id="n8hvxj"
 http://<ALB-DNS>/health
@@ -261,7 +261,7 @@ OK
 
 ---
 
-## 🔐 IAM Role Design
+##  IAM Role Design
 
 * CodeBuild Role:
 
@@ -280,7 +280,7 @@ OK
 
 ---
 
-## 🧠 Key DevOps Learnings
+## Key DevOps Learnings
 
 * Container running ≠ application ready
 * Health checks are critical for production systems
@@ -290,28 +290,28 @@ OK
 
 ---
 
-## 🚀 Future Enhancements
+## Future Enhancements
 
-* 🔁 Blue-Green deployment (CodeDeploy)
-* 📊 Prometheus + Grafana monitoring
-* 📦 Terraform (Infrastructure as Code)
-* ⚡ Auto-scaling based on metrics
-* 🔄 Canary deployments
+*  Blue-Green deployment (CodeDeploy)
+*  Prometheus + Grafana monitoring
+*  Terraform (Infrastructure as Code)
+*  Auto-scaling based on metrics
+*  Canary deployments
 
 ---
 
-## 💼 Resume Highlight
+## Resume Highlight
 
 > Designed and implemented a cloud-native CI/CD pipeline using AWS services with automated container deployment, health-based validation, and failure detection to ensure reliable production releases.
 
 ---
 
-## 👩‍💻 Author
+## Author
 
 **Shreya Baranwal**
 
 ---
 
-## ⭐ Support
+## Support
 
 If you found this useful, give it a ⭐ and share!
