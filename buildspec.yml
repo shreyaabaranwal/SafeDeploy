@@ -16,11 +16,9 @@ phases:
 
   build:
     commands:
-      # 🔹 BACKEND BUILD
       - echo Building Backend...
       - docker build -t $BACKEND_REPO -f deployments/docker/backend.Dockerfile .
 
-      # 🔹 FRONTEND BUILD
       - echo Building Frontend...
       - docker build -t $FRONTEND_REPO -f deployments/docker/frontend.Dockerfile .
 
@@ -28,20 +26,21 @@ phases:
     commands:
       - echo Tagging Images...
 
-      # 🔹 BACKEND TAG
       - docker tag $BACKEND_REPO:latest $ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/$BACKEND_REPO:latest
-
-      # 🔹 FRONTEND TAG
       - docker tag $FRONTEND_REPO:latest $ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/$FRONTEND_REPO:latest
 
       - echo Pushing Images to ECR...
 
-      # 🔹 PUSH BACKEND
       - docker push $ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/$BACKEND_REPO:latest
-
-      # 🔹 PUSH FRONTEND
       - docker push $ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/$FRONTEND_REPO:latest
+
+      - echo Creating imagedefinitions.json...
+
+      - printf '[{"name":"backend","imageUri":"%s"},{"name":"frontend","imageUri":"%s"}]' \
+        $ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/$BACKEND_REPO:latest \
+        $ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/$FRONTEND_REPO:latest \
+        > imagedefinitions.json
 
 artifacts:
   files:
-    - '**/*'
+    - imagedefinitions.json
