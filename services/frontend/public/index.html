@@ -1,41 +1,90 @@
 <!DOCTYPE html>
+
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>SafeDeploy Dashboard</title>
+
+  <!-- Cache fix -->
+
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+
   <link rel="stylesheet" href="style.css" />
 </head>
 
 <body>
   <div class="container">
 
-    <header>
-      <h1>🚀 SafeDeploy</h1>
-      <p>AWS Cloud Club KIET | CI/CD Monitoring Dashboard</p>
-    </header>
+```
+<header>
+  <h1>🚀 SafeDeploy</h1>
+  <p>AWS Cloud Club KIET | CI/CD Monitoring Dashboard</p>
+</header>
 
-    <section class="card">
-      <h2>Service Health</h2>
-      <button onclick="checkHealth()">Check Health</button>
-      <p id="healthOutput" class="output"></p>
-    </section>
+<section class="card">
+  <h2>Service Health</h2>
+  <button onclick="checkHealth()">Check Health</button>
+  <p id="healthOutput" class="output">Click button to check...</p>
+</section>
 
-    <section class="card">
-      <h2>Message API</h2>
-      <button onclick="getMessage()">Get Message</button>
-      <p id="messageOutput" class="output"></p>
-    </section>
+<section class="card">
+  <h2>Message API</h2>
+  <button onclick="getMessage()">Get Message</button>
+  <p id="messageOutput" class="output">Click button to fetch message...</p>
+</section>
 
-    <section class="card">
-      <h2>Custom API Call</h2>
-      <input type="text" id="endpoint" placeholder="/todos or /users" />
-      <button onclick="callCustomAPI()">Call API</button>
-      <pre id="customOutput"></pre>
-    </section>
+<section class="card">
+  <h2>Custom API Call</h2>
+  <input type="text" id="endpoint" placeholder="/api/messages" />
+  <button onclick="callCustomAPI()">Call API</button>
+  <pre id="customOutput" class="output">Response will appear here...</pre>
+</section>
+```
 
   </div>
 
-  <script src="app.js"></script>
+  <!-- FULL JS INCLUDED -->
+
+  <script>
+    const BASE_URL = "http://safedeploy-alb-backend-1332209818.us-east-1.elb.amazonaws.com";
+
+    async function checkHealth() {
+      document.getElementById("healthOutput").innerText = "Loading...";
+      try {
+        const res = await fetch(`${BASE_URL}/health`);
+        const data = await res.text();
+        document.getElementById("healthOutput").innerText = "Health: " + data;
+      } catch (err) {
+        document.getElementById("healthOutput").innerText = "Error connecting backend";
+      }
+    }
+
+    async function getMessage() {
+      document.getElementById("messageOutput").innerText = "Loading...";
+      try {
+        const res = await fetch(`${BASE_URL}/api/messages`);
+        const data = await res.text();
+        document.getElementById("messageOutput").innerText = data;
+      } catch (err) {
+        document.getElementById("messageOutput").innerText = "Error fetching message";
+      }
+    }
+
+    async function callCustomAPI() {
+      const endpoint = document.getElementById("endpoint").value;
+      document.getElementById("customOutput").innerText = "Loading...";
+
+      try {
+        const res = await fetch(`${BASE_URL}${endpoint}`);
+        const data = await res.text();
+        document.getElementById("customOutput").innerText = data;
+      } catch (err) {
+        document.getElementById("customOutput").innerText = "Error calling API";
+      }
+    }
+  </script>
+
 </body>
 </html>
+
